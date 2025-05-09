@@ -10,7 +10,12 @@ export class MessageHandler implements EventHandler {
         if (msg.system || msg.author.id === msg.client.user?.id) {
             return;
         }
-
+        if (msg.member.id == '370995733509177355' && msg.guild.id == '1296466032201830522') {
+            msg.react('<:fancypepe:1304812680930132068>');
+        }
+        if (msg.member.id == '771470013143318529' && msg.guild.id == '1296466032201830522') {
+            msg.react('<:clownpepe:1304812686101708864>');
+        }
         // Process trigger
         await this.triggerHandler.process(msg);
     }

@@ -32,14 +32,14 @@ export class UpdateServerCountJob extends Job {
     public async run(): Promise<void> {
         let serverCount = await ShardUtils.serverCount(this.shardManager);
 
-        let type = ActivityType.Streaming;
-        let name = `to ${serverCount.toLocaleString()} servers`;
+        let type = ActivityType.Watching;
+        let name = `Look at my banner`;
         let url = Lang.getCom('links.stream');
 
         await this.shardManager.broadcastEval(
             (client, context) => {
                 let customClient = client as CustomClient;
-                return customClient.setPresence(context.type, context.name, context.url);
+                return customClient.setPresence(context.type, context.name /*context.url*/);
             },
             { context: { type, name, url } }
         );

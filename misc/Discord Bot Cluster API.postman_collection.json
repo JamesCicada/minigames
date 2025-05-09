@@ -32,7 +32,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"type\": \"STREAMING\",\r\n    \"name\": \"to 1,000,000 servers\",\r\n    \"url\": \"https://www.twitch.tv/novakevin\"\r\n}",
+							"raw": "{\r\n    \"type\": \"WATCHING\",\r\n    \"name\": \"Look at my banner\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

@@ -87,7 +87,40 @@ export class Bot {
         if (!Debug.dummyMode.enabled) {
             this.jobService.start();
         }
-
+        const banners = [
+            'https://i.pinimg.com/originals/51/ab/d8/51abd821b2e8e1d95a1da81d0db16e8b.gif',
+            'https://images-ext-1.discordapp.net/external/hCrrZZarSREsMoa2_QEsC5Boq_gDpWMJ_pW--Pk6KYw/%3Fsize%3D1024/https/cdn.discordapp.com/banners/1370183096938266644/a_961cd702e92d1005a9f3174cd2805be4.gif',
+            'https://i.pinimg.com/originals/28/53/3e/28533ef14bb6b99eee94bc85560eb83f.gif',
+            'https://i.pinimg.com/originals/a9/a9/ce/a9a9ce4d2e68819ef1f825b025347070.gif',
+            'https://i.pinimg.com/originals/ad/f7/f4/adf7f40339edce3d813d443533b41d15.gif',
+            'https://i.pinimg.com/originals/80/d9/74/80d9740c58e66c7698de024e244c40fb.gif',
+            'https://i.pinimg.com/originals/a8/92/87/a8928706c21c5f8ebdf67552898fa04f.gif',
+        ];
+        const cl = this.client;
+        changeBanner();
+        setInterval(
+            () => {
+                changeBanner();
+            },
+            1000 * 60 * 5
+        );
+        async function changeBanner() {
+            const bannerIndex = Math.floor(Math.random() * banners.length);
+            const imageUrl = banners[bannerIndex];
+            const response = await fetch(imageUrl);
+            const arrayBuffer = await response.arrayBuffer();
+            const buffer = Buffer.from(arrayBuffer);
+            await cl.user.setBanner(buffer).catch(console.log);
+            console.log('changed banner to ' + banners[bannerIndex]);
+        }
+        this.client.user.setPresence({
+            activities: [
+                {
+                    name: 'Look at my banner',
+                    type: 3,
+                },
+            ],
+        });
         this.ready = true;
         Logger.info(Logs.info.clientReady);
     }

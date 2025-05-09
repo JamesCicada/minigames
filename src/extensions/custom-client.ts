@@ -7,15 +7,15 @@ export class CustomClient extends Client {
 
     public setPresence(
         type: Exclude<ActivityType, ActivityType.Custom>,
-        name: string,
-        url: string
+        name: string
+        // url: string
     ): Presence {
         return this.user?.setPresence({
             activities: [
                 {
                     type,
                     name,
-                    url,
+                    // url,
                 },
             ],
         });

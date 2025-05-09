@@ -13,7 +13,7 @@ const require = createRequire(import.meta.url);
 let Config = require('../config/config.json');
 let Debug = require('../config/debug.json');
 let Logs = require('../lang/logs.json');
-
+require('dotenv').config();
 async function start(): Promise<void> {
     Logger.info(Logs.info.appStarted);
 
@@ -31,11 +31,13 @@ async function start(): Promise<void> {
         if (Config.clustering.enabled) {
             let resBody = await masterApiService.login();
             shardList = resBody.shardList;
-            let requiredShards = await ShardUtils.requiredShardCount(Config.client.token);
+            let requiredShards = await ShardUtils.requiredShardCount(
+                process.env.TOKEN /*Config.client.token*/
+            );
             totalShards = Math.max(requiredShards, resBody.totalShards);
         } else {
             let recommendedShards = await ShardUtils.recommendedShardCount(
-                Config.client.token,
+                process.env.TOKEN /*Config.client.token*/,
                 Config.sharding.serversPerShard
             );
             shardList = MathUtils.range(0, recommendedShards);
@@ -52,7 +54,7 @@ async function start(): Promise<void> {
     }
 
     let shardManager = new ShardingManager('dist/start-bot.js', {
-        token: Config.client.token,
+        token: process.env.TOKEN /*Config.client.token*/,
         mode: Debug.override.shardMode.enabled ? Debug.override.shardMode.value : 'process',
         respawn: true,
         totalShards,
